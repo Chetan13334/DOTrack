@@ -1,13 +1,17 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import {Accordion, AccordionItem} from "@heroui/react";
-import { AppRouter } from './router';
+import { Button, HStack } from '@chakra-ui/react'
+import { ColorModeButton } from './components/ui/color-mode'
+import { Demo } from './components/Custom-component/Demo'
 
 function App() {
-  const [count, setCount] = useState(0)
-   return <AppRouter />;
+  return (
+    <HStack display='flex' justifyContent='space-between' boxSizing='border-box' padding='20px'>
+      <ColorModeButton />
+      <Button>Click me</Button>
+      <Button>Click me</Button>
+      <Demo />
+    </HStack>
+  )
 }
 
 export default App
