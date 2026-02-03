@@ -8,10 +8,7 @@ import {HeroUIProvider} from "@heroui/react";
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <HeroUIProvider>
-      <main className="light text-foreground bg-background">
-
       <App />
-      </main>
     </HeroUIProvider>
   </StrictMode>,
 )
