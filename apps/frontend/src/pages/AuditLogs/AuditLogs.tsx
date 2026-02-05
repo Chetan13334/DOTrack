@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Button } from "@heroui/react";
-// Removed unused imports
+import { Button } from "../../Components/common/Button";
 import Pagination from "../../Components/common/Pagination";
 import StatsGrid, { type StatItem } from "../../Components/common/StatsGrid";
 import AuditTable, { type AuditEntry } from "../../Components/common/TableComp";
@@ -83,7 +82,7 @@ const AuditDashboard: React.FC = () => {
                 <StatsGrid stats={stats} />
 
                 <div className="flex justify-end">
-                    <Button color="success" variant="flat">
+                    <Button variant="primary">
                         Verify All Records
                     </Button>
                 </div>

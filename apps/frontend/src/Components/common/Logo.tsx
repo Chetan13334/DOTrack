@@ -19,14 +19,16 @@ export const Logo: React.FC<LogoProps> = ({ className = "size-8 text-primary", s
 
 export const LogoWithText: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
     return (
-        <div
-            className="flex items-center gap-3 group cursor-pointer"
+        <button
+            type="button"
+            className="flex items-center gap-3 group cursor-pointer bg-transparent border-none p-0"
             onClick={onClick}
+            aria-label="Nexus CI/CD Home"
         >
             <Logo className="size-8 text-primary group-hover:scale-110 transition-transform" />
             <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
                 Nexus CI/CD
             </h2>
-        </div>
+        </button>
     );
 };

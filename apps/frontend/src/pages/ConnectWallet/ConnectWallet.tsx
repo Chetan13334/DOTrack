@@ -3,6 +3,9 @@ import { AuthLayout } from "../../Components/layout/AuthLayout";
 import { SmoothScrollProvider } from "../../Components/layout/SmoothScrollProvider";
 
 const ConnectWallet: React.FC = () => {
+    // TODO: Integrate wallet connection state (useAccount, useNetwork from wagmi/web3-react)
+    const isConnected = false; // Replace with actual wallet connection state
+    const isPolygonMainnet = false; // Replace with actual network check
 
     return (
         <SmoothScrollProvider>
@@ -13,8 +16,9 @@ const ConnectWallet: React.FC = () => {
             maxWidth="max-w-[480px]"
         >
             {/* Status Badge */}
-            <div className="flex items-center justify-center mb-8">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+            {isConnected && isPolygonMainnet && (
+                <div className="flex items-center justify-center mb-8">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
                     <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -22,6 +26,7 @@ const ConnectWallet: React.FC = () => {
                     <span className="text-xs font-medium text-emerald-400">Connected to Polygon Mainnet</span>
                 </div>
             </div>
+            )}
 
             {/* Wallet Options */}
             <div className="space-y-3 mb-8">
@@ -75,7 +80,7 @@ interface WalletOptionProps {
 }
 
 const WalletOption: React.FC<WalletOptionProps> = ({ name, description, icon }) => (
-    <div className="flex items-center gap-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl px-4 min-h-[72px] py-2 justify-between cursor-pointer transition-all group active:scale-[0.98]">
+    <div className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-xl px-4 min-h-[72px] py-2 justify-between transition-all group">
         <div className="flex items-center gap-4">
             <div className="text-white flex items-center justify-center rounded-lg bg-[#282e39] shrink-0 size-12 shadow-inner">
                 {icon}

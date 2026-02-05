@@ -4,7 +4,7 @@ function Topbar() {
     return (
         <header className="flex items-center justify-between sticky top-0 z-40 border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 sm:px-8 py-4">
             <div className="flex items-center gap-6">
-                <h2 className="text-slate-900 dark:text-white font-bold text-sm tracking-tight uppercase tracking-wider">Project Overview</h2>
+                <h2 className="text-slate-900 dark:text-white font-bold text-sm uppercase tracking-wider">Project Overview</h2>
                 <div className="hidden sm:block h-6 w-px bg-slate-200 dark:bg-slate-800"></div>
                 <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-full border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-colors cursor-default">
                     <span className="material-symbols-outlined text-sm text-primary">hub</span>

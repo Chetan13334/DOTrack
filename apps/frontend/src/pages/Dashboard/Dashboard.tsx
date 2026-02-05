@@ -15,6 +15,7 @@ const Dashboard = () => {
     useEffect(() => {
         let currentStageIndex = 0;
         let interval: any;
+        let restartTimeout: any;
 
         const runAnimation = () => {
             // Reset all stages to pending
@@ -39,7 +40,7 @@ const Dashboard = () => {
                             newStages[currentStageIndex - 1].icon = "check";
                         }
                         clearInterval(interval);
-                        setTimeout(runAnimation, 3000);
+                        restartTimeout = setTimeout(runAnimation, 3000);
                         return newStages;
                     }
 
@@ -77,6 +78,7 @@ const Dashboard = () => {
 
         return () => {
             if (interval) clearInterval(interval);
+            if (restartTimeout) clearTimeout(restartTimeout);
         };
     }, []);
 
@@ -123,7 +125,7 @@ const Dashboard = () => {
                         <div className="absolute top-1/2 left-0 w-full h-[1px] bg-slate-200 dark:bg-slate-700 -translate-y-1/2 z-0"></div>
                         <div
                             className="absolute top-1/2 left-0 h-[1px] bg-primary -translate-y-1/2 z-0 transition-all duration-1000"
-                            style={{ width: `${(stages.filter(s => s.status === 'done').length / (stages.length - 1)) * 100}%` }}
+                            style={{ width: `${stages.length > 1 ? (stages.filter(s => s.status === 'done').length / (stages.length - 1)) * 100 : 0}%` }}
                         ></div>
 
                         {stages.map((stage, index) => (

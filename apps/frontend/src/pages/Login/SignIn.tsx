@@ -10,8 +10,15 @@ import { SmoothScrollProvider } from "../../Components/layout/SmoothScrollProvid
 const SignIn: React.FC = () => {
     const navigate = useNavigate();
 
+    // TODO: Replace with real authentication flow
+    // 1. Add state for email/password (useState)
+    // 2. Perform client-side validation
+    // 3. Call authentication API (authService.signIn)
+    // 4. Handle success: store token securely, navigate to /dashboard
+    // 5. Handle failure: display error message to user
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        // Placeholder: immediate navigation (REMOVE IN PRODUCTION)
         navigate("/dashboard");
     };
 
@@ -39,7 +46,6 @@ const SignIn: React.FC = () => {
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-500" htmlFor="password">
                             Password
                         </label>
-                        <a className="text-xs text-primary hover:underline font-bold" href="#">Forgot?</a>
                     </div>
                     <Input
                         type="password"

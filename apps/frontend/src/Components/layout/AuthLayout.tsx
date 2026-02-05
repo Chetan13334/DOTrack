@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { LogoWithText } from "../common/Logo";
 
 interface AuthLayoutProps {
@@ -31,7 +31,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
             <header className="w-full px-6 lg:px-20 py-6">
                 <div className="max-w-[1200px] mx-auto flex items-center justify-between">
                     <LogoWithText onClick={() => navigate("/")} />
-                    <a className="text-sm font-medium text-slate-400 hover:text-white transition-colors" href="#">Back to Marketplace</a>
+                    <Link className="text-sm font-medium text-slate-400 hover:text-white transition-colors" to="/">Back to Marketplace</Link>
                 </div>
             </header>
 

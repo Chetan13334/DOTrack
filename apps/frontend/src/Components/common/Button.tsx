@@ -13,6 +13,7 @@ export const Button: React.FC<ButtonProps> = ({
     size = "md",
     className = "",
     icon,
+    type = "button",
     ...props
 }) => {
     const baseStyles = "inline-flex items-center justify-center rounded-lg font-bold transition-all transition-colors active:scale-95 disabled:opacity-50 disabled:pointer-events-none";
@@ -34,6 +35,7 @@ export const Button: React.FC<ButtonProps> = ({
 
     return (
         <button
+            type={type}
             className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
             {...props}
         >

@@ -47,19 +47,19 @@ export const PublicHeader: React.FC = () => {
                                         <span className="text-sm font-bold">Connect Wallet</span>
                                     </div>
                                 </DropdownItem>
-                                <DropdownItem key="features" textValue="Features">
+                                <DropdownItem key="features" textValue="Features" onClick={() => navigate("/features")}>
                                     <div className="flex items-center gap-3">
                                         <span className="material-symbols-outlined text-[20px] opacity-60">layers</span>
                                         <span className="text-sm">Features</span>
                                     </div>
                                 </DropdownItem>
-                                <DropdownItem key="marketplace" textValue="Marketplace">
+                                <DropdownItem key="marketplace" textValue="Marketplace" onClick={() => navigate("/")}>
                                     <div className="flex items-center gap-3">
                                         <span className="material-symbols-outlined text-[20px] opacity-60">storefront</span>
                                         <span className="text-sm">Marketplace</span>
                                     </div>
                                 </DropdownItem>
-                                <DropdownItem key="docs" textValue="Docs">
+                                <DropdownItem key="docs" textValue="Docs" onClick={() => navigate("/docs")}>
                                     <div className="flex items-center gap-3">
                                         <span className="material-symbols-outlined text-[20px] opacity-60">description</span>
                                         <span className="text-sm">Documentation</span>
@@ -82,9 +82,9 @@ export const PublicHeader: React.FC = () => {
 
                 <div className="flex items-center gap-4 sm:gap-6">
                     <nav className="hidden lg:flex items-center gap-6 lg:gap-8 mr-4">
-                        <NavLink href="#">Features</NavLink>
-                        <NavLink href="#">Marketplace</NavLink>
-                        <NavLink href="#">Docs</NavLink>
+                        <NavLink href="/features">Features</NavLink>
+                        <NavLink href="/">Marketplace</NavLink>
+                        <NavLink href="/docs">Docs</NavLink>
                     </nav>
 
                     <div className="flex items-center gap-2 sm:gap-3 shrink-0">
