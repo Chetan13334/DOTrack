@@ -5,14 +5,21 @@ import { PublicHeader } from "../../Components/layout/PublicHeader";
 import { FeatureCard } from "../../Components/common/FeatureCard";
 import { Button } from "../../Components/common/Button";
 import { Logo } from "../../Components/common/Logo";
-import { SmoothScrollProvider } from "../../Components/layout/SmoothScrollProvider";
+import { Scroller } from "../../Components/common/Scroller";
 
 const Landing: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <SmoothScrollProvider>
-      <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300">
+    <Scroller 
+      className="relative min-h-screen w-full bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300" 
+      direction="vertical" 
+      scrollbarStyle="thin"
+      root={true}
+      lerp={0.06}
+      duration={1.5}
+    >
+      <div className="flex flex-col overflow-x-hidden">
         <PublicHeader />
 
         <main className="flex-1 flex flex-col items-center">
@@ -229,7 +236,7 @@ const Landing: React.FC = () => {
           </div>
         </footer>
       </div>
-    </SmoothScrollProvider>
+    </Scroller>
   );
 };
 

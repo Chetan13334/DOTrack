@@ -1,11 +1,10 @@
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthLayout } from "../../Components/layout/AuthLayout";
 import { Button } from "../../Components/common/Button";
 import { Input } from "../../Components/common/Input";
 import { SocialAuth } from "../../Components/common/SocialAuth";
 import { Divider } from "../../Components/common/Divider";
-import { SmoothScrollProvider } from "../../Components/layout/SmoothScrollProvider";
 
 const SignIn: React.FC = () => {
     const navigate = useNavigate();
@@ -23,8 +22,7 @@ const SignIn: React.FC = () => {
     };
 
     return (
-        <SmoothScrollProvider>
-            <AuthLayout
+        <AuthLayout
             title="Welcome Back"
             description="Continue building the trustless future."
         >
@@ -62,7 +60,7 @@ const SignIn: React.FC = () => {
 
             <div className="mt-8 text-center">
                 <p className="text-sm text-slate-500 mb-4">
-                    New here? <a className="text-primary hover:underline font-bold cursor-pointer" onClick={() => navigate("/signup")}>Create an account</a>
+                    New here? <Link to="/signup" className="text-primary hover:underline font-bold cursor-pointer">Create an account</Link>
                 </p>
                 <div className="pt-6 border-t border-slate-200 dark:border-slate-800">
                     <Button
@@ -75,8 +73,7 @@ const SignIn: React.FC = () => {
                     </Button>
                 </div>
             </div>
-            </AuthLayout>
-        </SmoothScrollProvider>
+        </AuthLayout>
     );
 };
 
