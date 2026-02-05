@@ -65,6 +65,12 @@
   color: rgba(255, 255, 255, 0.87);
   background-color: var(--color-background-dark);
 
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .glass-card {
     background: rgba(27, 31, 39, 0.7);
     backdrop-filter: blur(10px);
