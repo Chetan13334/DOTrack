@@ -17,7 +17,7 @@ const Dashboard = () => {
         let interval: any;
 
         const runAnimation = () => {
-            // Reset stages
+            // Reset all stages to pending
             setStages(prev => prev.map(s => ({
                 ...s,
                 status: "pending",
@@ -30,37 +30,47 @@ const Dashboard = () => {
                 setStages(prev => {
                     const newStages = [...prev];
 
-                    // Mark previous stage as done
-                    if (currentStageIndex > 0 && currentStageIndex <= newStages.length) {
-                        newStages[currentStageIndex - 1].status = "done";
-                        newStages[currentStageIndex - 1].time = "Just now";
-                        newStages[currentStageIndex - 1].icon = "check";
-                        if (newStages[currentStageIndex - 1].id === 3) newStages[currentStageIndex - 1].icon = "verified_user";
-                    }
-
-                    // If we've reached the end, loop back
+                    // If we've completed all stages, mark last as done and restart
                     if (currentStageIndex >= newStages.length) {
+                        // Mark the last stage as done before restarting
+                        if (currentStageIndex === newStages.length && newStages[currentStageIndex - 1]) {
+                            newStages[currentStageIndex - 1].status = "done";
+                            newStages[currentStageIndex - 1].time = "Complete";
+                            newStages[currentStageIndex - 1].icon = "check";
+                        }
                         clearInterval(interval);
                         setTimeout(runAnimation, 3000);
                         return newStages;
                     }
 
-                    // Mark current stage as active
-                    if (newStages[currentStageIndex]) {
-                        newStages[currentStageIndex].status = "active";
-                        if (currentStageIndex === 3) { // On-Chain Gate
-                            newStages[currentStageIndex].time = "Pending Signature";
-                            newStages[currentStageIndex].icon = "pen_size_2";
-                        } else {
-                            newStages[currentStageIndex].time = "Running...";
-                            newStages[currentStageIndex].icon = "progress_activity";
+                    // Mark previous stage as done
+                    if (currentStageIndex > 0) {
+                        newStages[currentStageIndex - 1].status = "done";
+                        const timeAgo = ["2m ago", "1m ago", "45s ago", "30s ago"];
+                        newStages[currentStageIndex - 1].time = timeAgo[currentStageIndex - 1] || "Just now";
+                        newStages[currentStageIndex - 1].icon = "check";
+                        if (newStages[currentStageIndex - 1].id === 3) {
+                            newStages[currentStageIndex - 1].icon = "verified_user";
                         }
+                    }
+
+                    // Mark current stage as active
+                    newStages[currentStageIndex].status = "active";
+                    if (currentStageIndex === 3) { // On-Chain Gate
+                        newStages[currentStageIndex].time = "Pending Signature";
+                        newStages[currentStageIndex].icon = "pen_size_2";
+                    } else if (currentStageIndex === 4) { // Deploy
+                        newStages[currentStageIndex].time = "Deploying...";
+                        newStages[currentStageIndex].icon = "rocket_launch";
+                    } else {
+                        newStages[currentStageIndex].time = "Running...";
+                        newStages[currentStageIndex].icon = "progress_activity";
                     }
 
                     currentStageIndex++;
                     return newStages;
                 });
-            }, 3000);
+            }, 2500);
         };
 
         runAnimation();
@@ -71,9 +81,9 @@ const Dashboard = () => {
     }, []);
 
     return (
-        <div className="flex flex-col min-h-full p-4 sm:p-6 space-y-6 max-w-7xl mx-auto w-full">
+        <div className="flex flex-col min-h-full p-0 space-y-6 max-w-7xl mx-auto w-full">
             {/* PageHeading */}
-            <div className="flex flex-wrap justify-between items-center gap-6 bg-primary/5 p-4 rounded-xl border border-primary/10">
+            <div className="flex flex-wrap justify-between items-center gap-6 bg-primary/5 p-6 rounded-xl border border-primary/10">
                 <div className="flex flex-col gap-1.5">
                     <div className="flex items-center gap-3">
                         <StatusBadge status="success" className="px-1.5 py-0.5 text-[9px]">Active</StatusBadge>
@@ -100,14 +110,14 @@ const Dashboard = () => {
                 </Button>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
                 {/* Pipeline Status Visual Tracker */}
                 <DashboardCard
-                    className="lg:col-span-2"
+                    className="lg:col-span-3"
                     title="Pipeline Status"
                     icon="route"
                     extra="Live Monitoring"
-                    bodyClassName="p-8 min-h-[160px] flex items-center"
+                    bodyClassName="p-6 min-h-[140px] flex items-center"
                 >
                     <div className="flex items-center justify-between relative w-full px-4">
                         <div className="absolute top-1/2 left-0 w-full h-[1px] bg-slate-200 dark:bg-slate-700 -translate-y-1/2 z-0"></div>
@@ -145,23 +155,24 @@ const Dashboard = () => {
 
                 {/* Approval Center Widget */}
                 <DashboardCard
+                    className="lg:col-span-2"
                     title="Approval Center"
                     icon="gavel"
-                    bodyClassName="bg-primary/5 border-primary/20 p-5"
+                    bodyClassName="bg-primary/5 border-primary/20 p-3"
                 >
-                    <div className="flex flex-col gap-4">
-                        <div className="flex items-start gap-4">
-                            <div className="p-2 rounded-lg bg-primary/20 text-primary">
-                                <span className="material-symbols-outlined text-[20px]">signature</span>
+                    <div className="flex flex-col gap-2">
+                        <div className="flex items-start gap-2">
+                            <div className="p-1.5 rounded-lg bg-primary/20 text-primary">
+                                <span className="material-symbols-outlined text-[18px]">signature</span>
                             </div>
                             <div>
                                 <h4 className="text-slate-900 dark:text-white font-bold text-[11px] uppercase tracking-wide">Signature Required</h4>
-                                <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-normal mt-1">
+                                <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-normal mt-0.5">
                                     Pipeline #882 requires your signature to proceed with deployment to Mainnet.
                                 </p>
                             </div>
                         </div>
-                        <div className="space-y-2 border-y border-primary/10 py-3">
+                        <div className="space-y-1 border-y border-primary/10 py-1.5">
                             <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest">
                                 <span className="text-slate-500">Gas Estimate</span>
                                 <span className="text-slate-900 dark:text-slate-200">~0.0042 ETH</span>
@@ -171,7 +182,7 @@ const Dashboard = () => {
                                 <span className="text-accent-emerald">Fastest</span>
                             </div>
                         </div>
-                        <Button className="w-full text-xs h-9" icon={<span className="material-symbols-outlined text-[18px]">draw</span>}>
+                        <Button className="w-full text-xs h-7" icon={<span className="material-symbols-outlined text-[16px]">draw</span>}>
                             Sign & Approve
                         </Button>
                     </div>
@@ -223,7 +234,7 @@ const Dashboard = () => {
             </DashboardCard>
 
             {/* Footer Status Bar */}
-            <footer className="mt-auto border-t border-slate-200 dark:border-slate-800 pt-6 flex flex-wrap justify-between items-center gap-4 text-[9px] font-black tracking-widest text-slate-500 uppercase">
+            <footer className="mt-4 border-t border-slate-200 dark:border-slate-800 pt-3 flex flex-wrap justify-between items-center gap-4 text-[9px] font-black tracking-widest text-slate-500 uppercase">
                 <div className="flex items-center gap-4">
                     <div className="flex items-center gap-1.5 px-2 py-1 bg-emerald-500/5 rounded border border-emerald-500/10">
                         <span className="size-1.5 rounded-full bg-emerald-500"></span>

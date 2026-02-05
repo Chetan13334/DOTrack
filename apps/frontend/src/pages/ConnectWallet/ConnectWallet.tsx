@@ -1,12 +1,12 @@
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
 import { AuthLayout } from "../../Components/layout/AuthLayout";
+import { SmoothScrollProvider } from "../../Components/layout/SmoothScrollProvider";
 
 const ConnectWallet: React.FC = () => {
-    const navigate = useNavigate();
 
     return (
-        <AuthLayout
+        <SmoothScrollProvider>
+            <AuthLayout
             title="Connect Your Wallet"
             description="Join the Decentralized CI/CD Ecosystem for Open-Source projects"
             backgroundVariant="mesh"
@@ -63,7 +63,8 @@ const ConnectWallet: React.FC = () => {
                     By connecting, you agree to the <a className="text-white hover:underline cursor-pointer" href="#">Terms of Service</a>
                 </p>
             </div>
-        </AuthLayout>
+            </AuthLayout>
+        </SmoothScrollProvider>
     );
 };
 

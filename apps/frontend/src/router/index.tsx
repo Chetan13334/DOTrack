@@ -8,6 +8,7 @@ import SignIn from "../pages/Login/SignIn";
 import SignUp from "../pages/Login/SignUp";
 import ConnectWallet from "../pages/ConnectWallet/ConnectWallet";
 import AuditDashboard from "../pages/AuditLogs/AuditLogs";
+import Pipeline from "../pages/Pipeline/Pipeline";
 
 import { AppLayout } from "../Components/layout/AppLayout";
 
@@ -25,6 +26,7 @@ export const AppRouter = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/deployments" element={<Deployments />} />
+        <Route path="/pipelines" element={<Pipeline />} />
         <Route path="/audit-logs" element={<AuditDashboard />} />
 
       </Route>

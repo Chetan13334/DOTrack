@@ -17,7 +17,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
     description,
     backgroundVariant = "node",
     maxWidth = "max-w-[440px]",
-    showLogo = true
+    // showLogo = true (unused)
 }) => {
     const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
         : "bg-card-dark border border-slate-800 shadow-2xl";
 
     return (
-        <div className={`bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300 h-screen flex flex-col overflow-x-hidden overflow-y-auto ${bgClass}`}>
+        <div className={`bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300 min-h-screen flex flex-col ${bgClass}`}>
             <header className="w-full px-6 lg:px-20 py-6">
                 <div className="max-w-[1200px] mx-auto flex items-center justify-between">
                     <LogoWithText onClick={() => navigate("/")} />
