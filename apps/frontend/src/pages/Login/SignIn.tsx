@@ -5,7 +5,6 @@ import { Button } from "../../Components/common/Button";
 import { Input } from "../../Components/common/Input";
 import { SocialAuth } from "../../Components/common/SocialAuth";
 import { Divider } from "../../Components/common/Divider";
-import { SmoothScrollProvider } from "../../Components/layout/SmoothScrollProvider";
 
 const SignIn: React.FC = () => {
     const navigate = useNavigate();
@@ -23,8 +22,7 @@ const SignIn: React.FC = () => {
     };
 
     return (
-        <SmoothScrollProvider>
-            <AuthLayout
+        <AuthLayout
             title="Welcome Back"
             description="Continue building the trustless future."
         >
@@ -75,8 +73,7 @@ const SignIn: React.FC = () => {
                     </Button>
                 </div>
             </div>
-            </AuthLayout>
-        </SmoothScrollProvider>
+        </AuthLayout>
     );
 };
 

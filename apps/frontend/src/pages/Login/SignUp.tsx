@@ -5,7 +5,6 @@ import { Button } from "../../Components/common/Button";
 import { Input } from "../../Components/common/Input";
 import { SocialAuth } from "../../Components/common/SocialAuth";
 import { Divider } from "../../Components/common/Divider";
-import { SmoothScrollProvider } from "../../Components/layout/SmoothScrollProvider";
 
 const SignUp: React.FC = () => {
     const navigate = useNavigate();
@@ -24,8 +23,7 @@ const SignUp: React.FC = () => {
     };
 
     return (
-        <SmoothScrollProvider>
-            <AuthLayout
+        <AuthLayout
             title="Join the Future of DevOps"
             description="Create your account to start shipping decentralized."
             maxWidth="max-w-[450px]"
@@ -80,8 +78,7 @@ const SignUp: React.FC = () => {
                     © 2024 Nexus CI/CD Protocol. Secured by Ethereum.
                 </p>
             </div>
-            </AuthLayout>
-        </SmoothScrollProvider>
+        </AuthLayout>
     );
 };
 

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { AuthLayout } from "../../Components/layout/AuthLayout";
-import { SmoothScrollProvider } from "../../Components/layout/SmoothScrollProvider";
 
 const ConnectWallet: React.FC = () => {
     // TODO: Integrate wallet connection state (useAccount, useNetwork from wagmi/web3-react)
@@ -8,8 +7,7 @@ const ConnectWallet: React.FC = () => {
     const isPolygonMainnet = false; // Replace with actual network check
 
     return (
-        <SmoothScrollProvider>
-            <AuthLayout
+        <AuthLayout
             title="Connect Your Wallet"
             description="Join the Decentralized CI/CD Ecosystem for Open-Source projects"
             backgroundVariant="mesh"
@@ -68,8 +66,7 @@ const ConnectWallet: React.FC = () => {
                     By connecting, you agree to the <a className="text-white hover:underline cursor-pointer" href="#">Terms of Service</a>
                 </p>
             </div>
-            </AuthLayout>
-        </SmoothScrollProvider>
+        </AuthLayout>
     );
 };
 

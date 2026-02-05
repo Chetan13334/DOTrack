@@ -2,6 +2,7 @@ import * as React from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Logo } from '../common/Logo';
 import { Button } from '../common/Button';
+import { Scroller } from '../common/Scroller';
 import ProjectFilter from '../../pages/AuditLogs/ProjectFilter';
 
 interface NavItem {
@@ -112,11 +113,13 @@ function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
                 </div>
 
                 {/* Navigation Menu */}
-                <nav className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar">
-                    <div className="flex flex-col gap-1">
-                        {navItems.map(renderNavItem)}
-                    </div>
-                </nav>
+                <Scroller className="flex-1" direction="vertical" scrollbarStyle="thin">
+                    <nav>
+                        <div className="flex flex-col gap-1">
+                            {navItems.map(renderNavItem)}
+                        </div>
+                    </nav>
+                </Scroller>
             </div>
 
             {/* Bottom Section */}
