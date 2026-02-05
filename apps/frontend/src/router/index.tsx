@@ -4,6 +4,9 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import Projects from "../pages/Project/Project";
 import Deployments from "../pages/Deployments/Deployments";
 import Landing from "../pages/Landing/Landing";
+import SignIn from "../pages/Login/SignIn";
+import SignUp from "../pages/Login/SignUp";
+import ConnectWallet from "../pages/ConnectWallet/ConnectWallet";
 
 import { AppLayout } from "../Components/layout/AppLayout";
 
@@ -13,6 +16,9 @@ export const AppRouter = () => {
 
       {/* Public */}
       <Route path="/" element={<Landing />} />
+      <Route path="/login" element={<SignIn />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/connect" element={<ConnectWallet />} />
 
       {/* Protected / App */}
       <Route element={<AppLayout />}>
