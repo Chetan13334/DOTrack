@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Projects from "../pages/Projects/Projects";
@@ -14,6 +14,7 @@ import RegisterProject from "../pages/RegisterProject/RegisterProject";
 import VersionHistory from "../pages/VersionHistory/VersionHistory";
 
 import { AppLayout } from "../Components/layout/AppLayout";
+import { ProtectedRoute } from "../Components/ProtectedRoute";
 
 export const AppRouter = () => {
   return (
@@ -24,18 +25,24 @@ export const AppRouter = () => {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/connect" element={<ConnectWallet />} />
 
-      <Route element={<AppLayout />}>
+      {/* Protected routes */}
+      <Route element={<ProtectedRoute />}>
+        <Route element={<AppLayout />}>
 
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/all-projects" element={<AllProjects />} />
-        <Route path="/register-project" element={<RegisterProject />} />
-        <Route path="/deployments" element={<Deployments />} />
-        <Route path="/pipelines" element={<Pipeline />} />
-        <Route path="/audit-logs" element={<AuditDashboard />} />
-        <Route path="/version-history" element={<VersionHistory />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/all-projects" element={<AllProjects />} />
+          <Route path="/register-project" element={<RegisterProject />} />
+          <Route path="/deployments" element={<Deployments />} />
+          <Route path="/pipelines" element={<Pipeline />} />
+          <Route path="/audit-logs" element={<AuditDashboard />} />
+          <Route path="/version-history" element={<VersionHistory />} />
 
+        </Route>
       </Route>
+
+      {/* Catch-all redirect */}
+      <Route path="*" element={<Navigate to="/" replace />} />
 
     </Routes>
   );
