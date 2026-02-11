@@ -7,3 +7,4 @@ export * from './landing';
 export * from './auth';
 export * from './wallet';
 export * from './dashboard';
+export * from './marketplace';

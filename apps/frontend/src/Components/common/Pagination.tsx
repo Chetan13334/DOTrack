@@ -1,4 +1,6 @@
 import { Button } from "@heroui/react";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+
 
 interface PaginationProps {
     totalItems: number;
@@ -23,8 +25,8 @@ const Pagination = ({
             </p>
 
             <div className="flex gap-1.5">
-                <Button size="sm" variant="bordered" className="border-nexus-border text-gray-400 h-7 px-3 text-xs min-w-0">
-                    Prev
+                <Button size="sm" variant="bordered" className="border-nexus-border text-gray-400 h-7 px-2 min-w-0">
+                    <FiChevronLeft size={16} />
                 </Button>
 
                 <Button size="sm" color="primary" className="bg-nexus-primary h-7 min-w-[28px] px-0 text-xs font-bold">
@@ -39,8 +41,8 @@ const Pagination = ({
                     3
                 </Button>
 
-                <Button size="sm" variant="bordered" className="border-nexus-border text-gray-400 h-7 px-3 text-xs min-w-0">
-                    Next
+                <Button size="sm" variant="bordered" className="border-nexus-border text-gray-400 h-7 px-2 min-w-0">
+                    <FiChevronRight size={16} />
                 </Button>
             </div>
         </div>

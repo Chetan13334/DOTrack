@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Projects from "../pages/Projects/Projects";
 import Deployments from "../pages/Deployments/Deployments";
@@ -12,6 +11,7 @@ import Pipeline from "../pages/Pipeline/Pipeline";
 import AllProjects from "../pages/Projects/Projects";
 import RegisterProject from "../pages/RegisterProject/RegisterProject";
 import VersionHistory from "../pages/VersionHistory/VersionHistory";
+import MarketPlace from "../pages/Marketplace/Marketplace";
 
 import { AppLayout } from "../Components/layout/AppLayout";
 
@@ -31,6 +31,7 @@ export const AppRouter = () => {
         <Route path="/all-projects" element={<AllProjects />} />
         <Route path="/register-project" element={<RegisterProject />} />
         <Route path="/deployments" element={<Deployments />} />
+        <Route path="/marketplace" element={<MarketPlace />} />
         <Route path="/pipelines" element={<Pipeline />} />
         <Route path="/audit-logs" element={<AuditDashboard />} />
         <Route path="/version-history" element={<VersionHistory />} />
