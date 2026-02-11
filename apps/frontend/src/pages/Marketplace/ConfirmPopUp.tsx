@@ -18,11 +18,11 @@ export const ConfirmPopUp: React.FC<ConfirmPopUpProps> = ({
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <div className="w-full max-w-[440px] bg-[#1a1f2e] border border-white/10 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+      <div className="w-full max-w-[440px] bg-[#1a1f2e] border border-white/10 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300 mx-auto">
         <div className="flex items-center justify-between p-6 border-b border-white/5">
           <h3 className="text-lg font-bold font-display text-white">Confirm Deployment Approval</h3>
           <button 
-            className="text-white/40 hover:text-white transition-colors"
+            className="text-white/40 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/5"
             onClick={onClose}
           >
             <span className="material-symbols-outlined">close</span>

@@ -53,17 +53,17 @@ const MarketPlace = () => {
       <main className="flex flex-1 justify-center py-5 px-2 lg:px-10">
         <div className="layout-content-container flex flex-col max-w-[1400px] flex-1">
           <div className="flex flex-col gap-2 pb-8">
-            <h1 className="text-white tracking-tight text-4xl font-bold leading-tight font-display">
+            <h1 className="text-2xl font-bold mb-1">
               Decentralized Pipeline Marketplace
             </h1>
-            <p className="text-[#9ca6ba] text-lg max-w-2xl">
+            <p className="text-xs text-gray-400">
               Secure, immutable, and transparent CI/CD templates stored on IPFS and verified by the blockchain.
             </p>
           </div>
 
           <div className="pb-6 relative z-[100]">
             <div className="flex flex-col md:flex-row gap-4 items-center">
-              <label className="flex flex-col min-w-40 h-14 w-full flex-1">
+              <label className="flex flex-col min-w-30 h-10 w-full flex-1">
                 <div className="flex w-full flex-1 items-stretch rounded-xl h-full shadow-lg">
                   <div className="text-[#9ca6ba] flex border-none bg-[#282e39] items-center justify-center pl-4 rounded-l-xl">
                     <span className="material-symbols-outlined">search</span>
@@ -80,7 +80,7 @@ const MarketPlace = () => {
                 {filterCategories.map((category) => (
                   <div key={category.name} className="relative">
                     <button
-                      className="flex h-14 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#282e39] px-4 border border-white/5 hover:border-primary/50 transition-all"
+                      className="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#282e39] px-4 border border-white/5 hover:border-primary/50 transition-all"
                       onClick={() => setSelectedCategory(selectedCategory === category.name ? null : category.name)}
                     >
                       <span className="material-symbols-outlined text-sm">{category.icon}</span>
@@ -112,7 +112,7 @@ const MarketPlace = () => {
             {quickFilters.map((filter) => (
               <button
                 key={filter}
-                className={`flex h-8 items-center justify-center gap-x-2 rounded-full px-4 border transition-colors ${
+                className={`flex h-6 items-center justify-center gap-x-2 rounded-full px-4 border transition-colors ${
                   selectedQuickFilter === filter
                     ? "bg-primary/20 border-primary/30"
                     : "bg-[#282e39] border-white/5 hover:bg-white/10"
