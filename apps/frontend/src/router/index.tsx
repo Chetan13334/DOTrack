@@ -1,11 +1,10 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Projects from "../pages/Projects/Projects";
 import Deployments from "../pages/Deployments/Deployments";
 import Landing from "../pages/Landing/Landing";
 import SignIn from "../pages/Login/SignIn";
-import SignUp from "../pages/Login/SignUp";
-import ConnectWallet from "../pages/ConnectWallet/ConnectWallet";
 import AuditDashboard from "../pages/AuditLogs/AuditLogs";
 import Pipeline from "../pages/Pipeline/Pipeline";
 import AllProjects from "../pages/Projects/Projects";
@@ -14,6 +13,7 @@ import VersionHistory from "../pages/VersionHistory/VersionHistory";
 import MarketPlace from "../pages/Marketplace/Marketplace";
 import Blockchain from "../pages/Blockchain/Blockchain";
 import { AppLayout } from "../Components/layout/AppLayout";
+import { ProtectedRoute } from "../Components/ProtectedRoute";
 
 export const AppRouter = () => {
   return (
@@ -21,8 +21,8 @@ export const AppRouter = () => {
 
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/connect" element={<ConnectWallet />} />
+      <Route element={<ProtectedRoute />}>
+        <Route element={<AppLayout />}>
 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/projects" element={<Projects />} />
@@ -35,7 +35,10 @@ export const AppRouter = () => {
           <Route path="/version-history" element={<VersionHistory />} />
           <Route path="/blockchain" element={<Blockchain />} />
 
+        </Route>
       </Route>
+
+      <Route path="*" element={<Navigate to="/" replace />} />
 
     </Routes>
   );
