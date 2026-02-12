@@ -5,6 +5,8 @@ import Projects from "../pages/Projects/Projects";
 import Deployments from "../pages/Deployments/Deployments";
 import Landing from "../pages/Landing/Landing";
 import SignIn from "../pages/Login/SignIn";
+import SignUp from "../pages/Login/SignUp";
+import ConnectWallet from "../pages/ConnectWallet/ConnectWallet";
 import AuditDashboard from "../pages/AuditLogs/AuditLogs";
 import Pipeline from "../pages/Pipeline/Pipeline";
 import AllProjects from "../pages/Projects/Projects";
@@ -14,16 +16,21 @@ import MarketPlace from "../pages/Marketplace/Marketplace";
 import Blockchain from "../pages/Blockchain/Blockchain";
 import { AppLayout } from "../Components/layout/AppLayout";
 import { ProtectedRoute } from "../Components/ProtectedRoute";
+import { PublicRoute } from "../Components/PublicRoute";
 
 export const AppRouter = () => {
   return (
     <Routes>
+      <Route element={<PublicRoute />}>
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Route>
 
-      <Route path="/" element={<Landing />} />
-      <Route path="/login" element={<SignIn />} />
+      <Route path="/connect" element={<ConnectWallet />} />
+
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
-
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/all-projects" element={<AllProjects />} />
@@ -31,6 +38,7 @@ export const AppRouter = () => {
           <Route path="/deployments" element={<Deployments />} />
           <Route path="/marketplace" element={<MarketPlace />} />
           <Route path="/pipelines" element={<Pipeline />} />
+          <Route path="/ipfs-templates" element={<Pipeline />} />
           <Route path="/audit-logs" element={<AuditDashboard />} />
           <Route path="/version-history" element={<VersionHistory />} />
           <Route path="/blockchain" element={<Blockchain />} />
@@ -38,7 +46,7 @@ export const AppRouter = () => {
         </Route>
       </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
 
     </Routes>
   );
