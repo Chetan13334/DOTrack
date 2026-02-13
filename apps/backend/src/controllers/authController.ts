@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as authService from '../services/authService';
+import { githubService } from '../services/githubService';
+import { oauthService } from '../services/oauthService';
 import RevokedTokenModel from '../models/revokedToken.model';
 import jwt from 'jsonwebtoken';
 import { signupSchema, signinSchema } from '../utils/validators';
@@ -90,13 +92,7 @@ export const googleAuth = async (req: Request, res: Response, next: NextFunction
     const callback = process.env.GOOGLE_CALLBACK_URL;
     if (!clientId || !callback) return res.status(500).json({ error: 'Google OAuth not configured' });
     const returnTo = (req.query.returnTo as string) || '/';
-    const frontend = process.env.FRONTEND_URL || 'http://localhost:3000';
-    const state = encodeURIComponent(JSON.stringify({ returnTo }));
-    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(
-      clientId
-    )}&redirect_uri=${encodeURIComponent(callback)}&response_type=code&scope=${encodeURIComponent(
-      'openid profile email'
-    )}&access_type=offline&prompt=consent&state=${state}`;
+    const url = oauthService.buildGoogleAuthUrl({ clientId, callbackUrl: callback, clientSecret: '' }, returnTo);
     res.redirect(url);
   } catch (err) {
     next(err);
@@ -113,20 +109,12 @@ export const googleCallback = async (req: Request, res: Response, next: NextFunc
     const frontend = process.env.FRONTEND_URL || 'http://localhost:3000';
 
     if (!code) return res.status(400).json({ error: 'Missing code' });
-    const params = new URLSearchParams();
-    params.append('code', code);
-    params.append('client_id', clientId);
-    params.append('client_secret', clientSecret);
-    params.append('redirect_uri', callback);
-    params.append('grant_type', 'authorization_code');
 
-    const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString(),
-    });
+    const tokenJson = await oauthService.exchangeGoogleCode(
+      { clientId, clientSecret, callbackUrl: callback },
+      code
+    );
 
-    const tokenJson = await tokenRes.json();
     const idToken = tokenJson.id_token as string | undefined;
     if (!idToken) return res.status(400).json({ error: 'Unable to verify google identity' });
 
@@ -141,15 +129,7 @@ export const googleCallback = async (req: Request, res: Response, next: NextFunc
     const cookieOptions = getRefreshCookieOptions();
     res.cookie('refreshToken', tokens.refreshToken, cookieOptions);
 
-    let returnTo = '/';
-    if (state) {
-      try {
-        const parsed = JSON.parse(decodeURIComponent(state));
-        if (parsed?.returnTo) returnTo = parsed.returnTo;
-      } catch (e) {
-      }
-    }
-
+    const { returnTo } = oauthService.parseState(state);
     res.redirect(`${frontend}${returnTo}`);
   } catch (err) {
     next(err);
@@ -162,9 +142,7 @@ export const githubAuth = async (req: Request, res: Response, next: NextFunction
     const callback = process.env.GITHUB_CALLBACK_URL;
     if (!clientId || !callback) return res.status(500).json({ error: 'GitHub OAuth not configured' });
     const returnTo = (req.query.returnTo as string) || '/';
-    const frontend = process.env.FRONTEND_URL || 'http://localhost:3000';
-    const state = encodeURIComponent(JSON.stringify({ returnTo }));
-    const url = `https://github.com/login/oauth/authorize?client_id=${encodeURIComponent(clientId)}&redirect_uri=${encodeURIComponent(callback)}&scope=${encodeURIComponent('read:user repo user:email')}&state=${state}`;
+    const url = oauthService.buildGithubAuthUrl({ clientId, callbackUrl: callback, clientSecret: '' }, returnTo);
     res.redirect(url);
   } catch (err) {
     next(err);
@@ -182,37 +160,23 @@ export const githubCallback = async (req: Request, res: Response, next: NextFunc
 
     if (!code) return res.status(400).json({ error: 'Missing code' });
 
-    const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ client_id: clientId, client_secret: clientSecret, code, redirect_uri: callback }),
-    });
+    const tokenJson = await oauthService.exchangeGithubCode(
+      { clientId, clientSecret, callbackUrl: callback },
+      code
+    );
 
-    const tokenJson = await tokenRes.json();
     const accessToken = tokenJson.access_token as string | undefined;
     if (!accessToken) return res.status(400).json({ error: 'Unable to obtain access token from GitHub' });
 
-    // Fetch user
-    const userRes = await fetch('https://api.github.com/user', {
-      headers: { Authorization: `token ${accessToken}`, Accept: 'application/vnd.github.v3+json' },
-    });
-    const userJson = await userRes.json();
+    const userJson = await githubService.getUserInfo(accessToken);
     const email = userJson?.email as string | undefined;
     const name = userJson?.name || userJson?.login;
     const githubId = userJson?.id ? String(userJson.id) : undefined;
     const githubUsername = userJson?.login;
 
-    // If email not present, fetch emails endpoint
     let primaryEmail = email;
     if (!primaryEmail) {
-      const emailsRes = await fetch('https://api.github.com/user/emails', {
-        headers: { Authorization: `token ${accessToken}`, Accept: 'application/vnd.github.v3+json' },
-      });
-      const emailsJson = await emailsRes.json();
-      if (Array.isArray(emailsJson)) {
-        const primary = emailsJson.find((e: any) => e.primary) || emailsJson[0];
-        primaryEmail = primary?.email;
-      }
+      primaryEmail = await githubService.getUserPrimaryEmail(accessToken);
     }
 
     const user = await authService.findOrCreateUserByGithub(primaryEmail, name, githubId, githubUsername, accessToken);
@@ -221,14 +185,7 @@ export const githubCallback = async (req: Request, res: Response, next: NextFunc
     const cookieOptions = getRefreshCookieOptions();
     res.cookie('refreshToken', tokens.refreshToken, cookieOptions);
 
-    let returnTo = '/';
-    if (state) {
-      try {
-        const parsed = JSON.parse(decodeURIComponent(state));
-        if (parsed?.returnTo) returnTo = parsed.returnTo;
-      } catch (e) {}
-    }
-
+    const { returnTo } = oauthService.parseState(state);
     res.redirect(`${frontend}${returnTo}`);
   } catch (err) {
     next(err);
@@ -242,17 +199,32 @@ export const getGithubRepos = async (req: AuthRequest, res: Response, next: Next
     const user = await UserModel.findById(payload.sub);
     if (!user) return res.status(404).json({ error: 'User not found' });
     const token = (user as any).githubAccessToken;
+    if (!token) return res.json([]);
+
+    const repos = await githubService.getUserRepos(token);
+    res.json(repos);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getGithubCollaborators = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  try {
+    const payload = req.user as any;
+    if (!payload?.sub) return res.status(401).json({ error: 'Unauthorized' });
+    const user = await UserModel.findById(payload.sub);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    const token = (user as any).githubAccessToken;
     if (!token) return res.status(400).json({ error: 'No GitHub access token available' });
 
-    const reposRes = await fetch('https://api.github.com/user/repos?per_page=100', {
-      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' },
-    });
-    if (!reposRes.ok) {
-      const text = await reposRes.text();
-      return res.status(502).json({ error: 'Failed to fetch repos', details: text });
-    }
-    const reposJson = await reposRes.json();
-    res.json(reposJson);
+    const { owner, repo } = req.params;
+    const ownerStr = Array.isArray(owner) ? owner[0] : owner;
+    const repoStr = Array.isArray(repo) ? repo[0] : repo;
+    
+    if (!ownerStr || !repoStr) return res.status(400).json({ error: 'Missing owner or repo parameter' });
+
+    const collaborators = await githubService.getRepoCollaboratorsOrContributors(token, ownerStr, repoStr);
+    res.json(collaborators);
   } catch (err) {
     next(err);
   }
