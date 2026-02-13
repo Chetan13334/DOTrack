@@ -1,7 +1,7 @@
-/* Tailwind CSS v4 Import */
+
 @import "tailwindcss";
 
-/* Custom Sleek Scrollbar */
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
 }
@@ -19,18 +19,16 @@
   background: #475569;
 }
 
-/* Google Fonts & Material Symbols Imports moved to index.html for performance */
 
-/* Custom Tailwind Theme Configuration */
 @theme {
-  /* Custom Colors */
+  
   --color-primary: #0d59f2;
   --color-background-light: #f5f6f8;
   --color-background-dark: #101622;
   --color-card-dark: #161b25;
   --color-accent-emerald: #10b981;
 
-  /* Nexus Branded Colors from Image */
+ 
   --color-nexus-bg: #0a0b10;
   --color-nexus-card: #161b22;
   --color-nexus-primary: #3b82f6;
@@ -38,23 +36,21 @@
   --color-nexus-purple: #a855f7;
   --color-nexus-border: #282e39;
 
-  /* Font Family */
+  
   --font-display: 'Space Grotesk', sans-serif;
 
-  /* Border Radius */
+  
   --radius-default: 0.25rem;
-  /* Standardized to lowercase 'default' */
+  
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
   --radius-full: 9999px;
 
-  /* Breakpoints from main */
+  
   --breakpoint-xs: 480px;
 }
 
-/* ========================================
-   ORIGINAL VITE CSS + MAIN UPDATES
-   ======================================== */
+
 
 :root {
   font-family: var(--font-display);
@@ -126,7 +122,8 @@ body {
 }
 
 
-button {
+
+button:not(.pagination-icon-btn) {
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
@@ -135,8 +132,30 @@ button {
   transition: border-color 0.25s;
 }
 
-button:hover {
+button:not(.pagination-icon-btn):hover {
   border-color: #646cff;
+}
+
+
+.pagination-icon-btn {
+  padding: 0 !important;
+  width: 2rem !important;
+  height: 2rem !important;
+  min-width: 2rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+}
+
+.pagination-icon-btn svg {
+  display: block !important;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  fill: #ffffff !important;
+  color: #ffffff !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 
