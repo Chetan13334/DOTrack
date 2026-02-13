@@ -13,7 +13,7 @@ import AllProjects from "../pages/Projects/Projects";
 import RegisterProject from "../pages/RegisterProject/RegisterProject";
 import VersionHistory from "../pages/VersionHistory/VersionHistory";
 import MarketPlace from "../pages/Marketplace/Marketplace";
-
+import Blockchain from "../pages/Blockchain/Blockchain";
 import { AppLayout } from "../Components/layout/AppLayout";
 import { ProtectedRoute } from "../Components/ProtectedRoute";
 import { PublicRoute } from "../Components/PublicRoute";
@@ -41,6 +41,8 @@ export const AppRouter = () => {
           <Route path="/ipfs-templates" element={<Pipeline />} />
           <Route path="/audit-logs" element={<AuditDashboard />} />
           <Route path="/version-history" element={<VersionHistory />} />
+          <Route path="/blockchain" element={<Blockchain />} />
+
         </Route>
       </Route>
 
